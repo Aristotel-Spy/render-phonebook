@@ -178,16 +178,16 @@ const App = () => {
               }
             }))
 
+            setNotif(`Added ${newName}`)
+
+            setTimeout(() => {
+              setNotif(null);
+            }, 2000)
+
 
           }).catch(error =>{
-            //catch is asynchronous so the code which has the setNotif(`Added ${newName}`)
-            //will be executed before catch and set a notification,that's why in here:
 
             setError(`Information of ${newName} has already been removed from the server.`)
-
-            setNotif(null); //we need to set this to null again 
-            //basically the code will execute catch faster, than the green notification can be shown
-            //which will set the notification to null, even though the code below catch will execute first.
 
             setTimeout(() => {
               setError(null);
@@ -196,11 +196,6 @@ const App = () => {
             
           })
 
-          setNotif(`Added ${newName}`)
-
-          setTimeout(() => {
-            setNotif(null);
-          }, 2000)
 
         } 
 
@@ -222,21 +217,31 @@ const App = () => {
           //concat the response.data which is what we posted to the json server (person)
           setPersons(persons.concat(response.data))
 
+           //when you set it reset the newName and number.
 
-        })
+           setNotif(`Added ${newName}`)
+
+           setTimeout(() => {
+             setNotif(null);
+           }, 2000)
+ 
+           setNewName('')
+           setNewNumber('')
 
 
-        //when you set it reset the newName and number.
-
-          setNotif(`Added ${newName}`)
-
-          setTimeout(() => {
-            setNotif(null);
-          }, 2000)
-
+        }).catch(error=>{
+          console.log('The error is: ',error.response.data.error)
           setNewName('')
           setNewNumber('')
 
+          setError(error.response.data.error)
+
+          setTimeout(() => {
+            setError(null);
+          }, 5000)
+        })
+
+       
     
       }
 

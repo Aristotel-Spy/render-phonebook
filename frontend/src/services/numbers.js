@@ -8,6 +8,9 @@ const baseUrl = '/api/persons'
 //however if u are running in development mode only the front end
 //it will be a problem that's why a proxy is set at vite.config.js
 
+
+//the errors that axios returns through catch are errors returned from the back-end.
+
 const getAll = () =>{
 
     return axios.get(baseUrl)
